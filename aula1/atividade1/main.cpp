@@ -15,7 +15,7 @@ int main(void) {
 	FILE *bin;
 
 	//Abre o Arquivo Binário	
-	if ((bin = fopen("arquivo_binario.txt","ab+")) == NULL) {
+	if ((bin = fopen("DADOS.bin","ab+")) == NULL) {
         printf("Erro ao abrir arquivo.");
     } else {
 	
@@ -32,32 +32,32 @@ int main(void) {
 			switch  (condicao) {
 			case 1:
 				
-						printf("Informe o nome:"); 
-						scanf("%s", pessoa.nome);
-						
-						printf("Informe o sobrenome: ");
-						scanf("%s", pessoa.sobrenome);
-		
-						printf("Informe a idade:"); 
-						scanf("%d", &pessoa.idade);
-						
-						printf("Informe o CPF: ");
-						scanf("%s", pessoa.cpf);
-	
-						fwrite(&pessoa, 1, sizeof(pessoa), bin);
-						break;
+				printf("Informe o nome:"); 
+				scanf("%s", pessoa.nome);
+				
+				printf("Informe o sobrenome: ");
+				scanf("%s", pessoa.sobrenome);
+
+				printf("Informe a idade:"); 
+				scanf("%d", &pessoa.idade);
+				
+				printf("Informe o CPF: ");
+				scanf("%s", pessoa.cpf);
+
+				fwrite(&pessoa, 1, sizeof(pessoa), bin);
+				break;
 				
 			case 2 :
-					rewind(bin);
-					while (fread(&pessoa ,1, sizeof(Cpessoa), bin) != 0) {
-						printf("-> %-30s \t %-30s \t %d \t %-11s\n", pessoa.nome, pessoa.sobrenome, pessoa.idade, pessoa.cpf);
-					} 
-					
-					fflush(stdin);
-					getchar();	
-					break;
+				rewind(bin);
+				while (fread(&pessoa ,1, sizeof(Cpessoa), bin) != 0) {
+					printf("-> %-30s \t %-30s \t %d \t %-11s\n", pessoa.nome, pessoa.sobrenome, pessoa.idade, pessoa.cpf);
+				}
+				
+				fflush(stdin);
+				getchar();	
+				break;
 			case 3:
-					return(0);
+				return(0);
 			default:
 				printf("Opcao desconhecida. Tente novamente!"); 
 				fflush(stdin);
@@ -65,8 +65,8 @@ int main(void) {
 			}
 			
 		}
-	
 	}
+	fclose(bin);
 }
 	
 

@@ -3,50 +3,63 @@
 #include <unistd.h> 
 #include <stdlib.h>
 
-#define SIZE 10000
+#define SIZE 100000
 
 int main() {
 	//Inicializa?? do Vetor
-	int n=5, *p;
+	clock_t start, end;
+	start = clock();
+	double execution_time;
 	int i, j = 0,  aux, q = 0;
+	float interacoes = 0;
+	int *p = (int *) malloc(SIZE * sizeof(int));
 	FILE *fUnordered, *fOrdered;
 	
 	//Leitura do arquivo
-	if (((fUnordered = fopen("Arquivo.txt", "r")) == NULL) && (fOrdered = fopen("arquivo_ordenado.txt", "w"))){
+	if ((fUnordered = fopen("Arquivo.txt", "r")) == NULL){
 		printf("Erro ao abrir o arquivo.");
 	} else {
-		p = (int *) malloc(SIZE * sizeof(int));
 		if (!p) {
 			printf("Erro: Memória insuficiente!");
 		} else {
+			printf("\nCarregando o vetor com os numeros do arquivo");
 			//Carregamento do vetor com os numeros do arquivo
 			while(!feof(fUnordered)) {
 				fscanf(fUnordered, "%d", &p[q]);
 				q++;
-				printf("Valor: %d\n", *(p++));
 			}
+			printf("\nIniciando a ordenacao");
+			//Algoritmo de Ordena??o 
+            while (j < SIZE) {
+              for(i = 0; i < SIZE-1; i++) {
+                if(p[i] > p[i + 1]) {
+     			  aux=p[i];
+     			  p[i] = p[i+1];
+     			  p[i+1] = aux;
+     			  interacoes++;
+                }
+              }
+		      j++;
+           }
+           if ((fOrdered = fopen("arquivo_ordenado.txt", "w+")) == NULL) {
+        	 printf("Erro ao abrir o arquivo.");
+		   } else {
+		   	   printf("\nGravando arquivo ordenado\n");
+	           //Gravando o arquivo ordenado
+	           for (q = 0; q < SIZE;q++) {
+	               fprintf(fOrdered, "%d\n", p[q]);
+	           }
+		   }
 		}
-		
 	}
- 	
- 
-////Algoritmo de Ordena??o 
-//	while (j < n) {
-//		for(i = 0; i < n-1; i++) {
-//			if(v[i] > v[i + 1]) {
-//     			aux=v[i];
-//     			v[i] = v[i+1];
-//     			v[i+1] = aux;
-//			}
-//		}
-//		j++;
-//	}
-////La?o de impress?o do Vetor
-//	for (int q=0; q<5; q++) {
-//        printf("%d \n",v[q]);
-//    }
-//    
-//    fclose(fUnordered);
-//    fclose(fOrdered);
-//    system("pause");  
+	
+	end = clock();
+	execution_time = ((double) end-start)/CLOCKS_PER_SEC;
+	printf("\nTempo de execucao: %f segundos", execution_time);
+	printf("\nA ordenacao teve %f interacoes.\n", interacoes);
+
+    fclose(fUnordered);
+    fclose(fOrdered);
+    system("pause");  
+
 }
