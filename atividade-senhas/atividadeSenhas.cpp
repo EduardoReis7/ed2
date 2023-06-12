@@ -9,8 +9,6 @@ int main() {
 	
 	FILE * arqSenha;
 	char i, j, k, l;
-	// char alfabeto[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-	// 				'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 	int m, opt;
 	
 	if ((arqSenha = fopen("Arquivo.txt", "w+")) == NULL){
@@ -61,7 +59,7 @@ void geraSenhaFor(FILE *arqSenha, char i, char j, char k, char l) {
 
 void geraSenhaRecursivo(FILE *arqSenha, int index, char *i, char *j, char *k, char *l) {
 	if (index == 3) {
-		if ((*l) != 91) {
+		if ((*l) <= 90) {
 			fprintf(arqSenha, "%c%c%c%c\n", *i, *j, *k, *l);
 			(*l)++;
 			geraSenhaRecursivo(arqSenha, 3, i, j, k, l);
@@ -71,19 +69,19 @@ void geraSenhaRecursivo(FILE *arqSenha, int index, char *i, char *j, char *k, ch
 	}
 	(*l) = 65;
 	if (index == 2) {
-		if (*k != 91) {
-	 		fprintf(arqSenha, "%c%c%c%c\n", i, j, k, l);
+		if (*k < 90) {
+	 		fprintf(arqSenha, "%c%c%c%c\n", *i, *j, *k, *l);
 	 		(*k)++;
 	 		geraSenhaRecursivo(arqSenha, 3, i, j, k, l);
-	 	} 
-		 else {
+	 	}
+		else {
 	 		geraSenhaRecursivo(arqSenha, 1, i, j, k, l);
 	 	}
 	}
 	(*k) = 65;
 	if (index == 1) {
-		if (*j != 91) {
-			fprintf(arqSenha, "%c%c%c%c\n", i, j, k, l);
+		if (*j < 90) {
+			fprintf(arqSenha, "%c%c%c%c\n", *i, *j, *k, *l);
 			(*j)++;
 			geraSenhaRecursivo(arqSenha, 2, i, j, k, l);
 		} else {
@@ -92,10 +90,12 @@ void geraSenhaRecursivo(FILE *arqSenha, int index, char *i, char *j, char *k, ch
 	}
 	(*j) = 65;
 	if (index == 0) {
-		if (*i != 91) {
-			fprintf(arqSenha, "%c%c%c%c\n", i, j, k, l);
+		if (*i < 90) {
+			fprintf(arqSenha, "%c%c%c%c\n", *i, *j, *k, *l);
 			(*i)++;
-			geraSenhaRecursivo(arqSenha, 0, i, j, k, l);
+			geraSenhaRecursivo(arqSenha, 3, i, j, k, l);
+		} else {
+			printf("Acabou.");
 		}
 	}
 }
